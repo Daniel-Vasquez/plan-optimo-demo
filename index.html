@@ -444,9 +444,91 @@
     nav { padding: 0 1rem; }
     nav button { padding: 0 0.75rem; font-size: 11px; }
   }
+
+  .mobile-header { display: none; }
+  @media (max-width: 428px) {
+    .mobile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+      height: 60px;
+      background: rgba(13,15,20,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .mobile-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 5px;
+    }
+    .hamburger .bar {
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+    .hamburger.open .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open .bar:nth-child(2) { opacity: 0; }
+    .hamburger.open .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    
+    nav#mainNav {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 60px);
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      background: var(--bg);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 150;
+      align-items: stretch;
+      border-bottom: none;
+      gap: 0.5rem;
+    }
+    nav#mainNav.open {
+      transform: translateX(0);
+    }
+    nav#mainNav button {
+      width: 100%;
+      text-align: left;
+      padding: 1.25rem 0;
+      font-size: 1.1rem;
+      height: auto;
+      border-bottom: 1px solid var(--border);
+    }
+    nav#mainNav button.active {
+      border-bottom-color: var(--accent);
+    }
+  }
 </style>
 </head>
 <body>
+
+<div class="mobile-header">
+  <div class="mobile-title">TU PLAN ÓPTIMO</div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</div>
 
 <nav id="mainNav">
   <button class="active" onclick="showPage('overview')">Resumen</button>
@@ -1382,6 +1464,11 @@
 </div>
 
 <script>
+  function toggleMenu() {
+    document.getElementById('mainNav').classList.toggle('open');
+    document.querySelector('.hamburger').classList.toggle('open');
+  }
+
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -1390,6 +1477,11 @@
     const pages = ['overview','weekly','strength','running','nutrition','periodization'];
     btns[pages.indexOf(id)].classList.add('active');
     window.scrollTo({top: 0, behavior: 'smooth'});
+
+    const nav = document.getElementById('mainNav');
+    if (nav.classList.contains('open')) {
+      toggleMenu();
+    }
   }
 </script>
 

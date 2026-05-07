@@ -516,6 +516,37 @@
     nav#mainNav button.active {
       border-bottom-color: var(--accent);
     }
+
+    /* Tablas Responsive: Vista de Tarjetas */
+    .prog-table, .prog-table tbody, .prog-table tr, .prog-table td {
+      display: block;
+      width: 100%;
+    }
+    .prog-table thead {
+      display: none;
+    }
+    .prog-table tr {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .prog-table tr:hover td {
+      background: transparent;
+    }
+    .prog-table td {
+      padding: 0.35rem 0;
+      border: none;
+      text-align: left;
+    }
+    .prog-table td:first-child {
+      font-size: 1.1rem;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
   }
 </style>
 </head>

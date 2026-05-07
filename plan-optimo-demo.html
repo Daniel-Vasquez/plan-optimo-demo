@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Entrenamiento Personalizado</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2230;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --accent: #e8ff47;
+    --accent2: #47c2ff;
+    --accent3: #ff6b35;
+    --text: #f0f2f8;
+    --muted: #8890a8;
+    --muted2: #5a6278;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2rem;
+    height: 56px;
+    overflow-x: auto;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 0 1rem;
+    height: 56px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1rem;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-card .value {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-card .unit {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* OBJECTIVES */
+  .objectives {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .obj-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .obj-tag .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  /* SECTION */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 2rem;
+  }
+
+  /* WEEK GRID */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 3rem;
+  }
+
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .day-card:hover { border-color: var(--border2); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .day-type {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+
+  .type-fuerza { background: rgba(232,255,71,0.12); color: var(--accent); border: 1px solid rgba(232,255,71,0.25); }
+  .type-cardio { background: rgba(71,194,255,0.12); color: var(--accent2); border: 1px solid rgba(71,194,255,0.25); }
+  .type-mixto { background: rgba(255,107,53,0.12); color: var(--accent3); border: 1px solid rgba(255,107,53,0.25); }
+  .type-descanso { background: rgba(90,98,120,0.2); color: var(--muted); border: 1px solid var(--border); }
+
+  .day-body { padding: 1rem 1.25rem; }
+
+  .day-schedule {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .exercise-list { list-style: none; }
+
+  .exercise-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+
+  .exercise-list li:last-child { border-bottom: none; }
+
+  .ex-bullet {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .ex-name { font-weight: 400; }
+  .ex-detail {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* RUNNING BLOCK */
+  .run-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 14px;
+  }
+
+  .run-block h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.04em;
+    color: var(--accent2);
+    margin-bottom: 0.4rem;
+  }
+
+  .run-detail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .run-metric { }
+  .run-metric .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .run-metric .val { font-size: 1.1rem; font-weight: 500; margin-top: 2px; }
+
+  /* TIPS BOX */
+  .tip-box {
+    background: rgba(232,255,71,0.05);
+    border: 1px solid rgba(232,255,71,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .tip-box strong { color: var(--text); }
+
+  /* NUTRITION PAGE */
+  .nutrition-hero {
+    background: linear-gradient(135deg, rgba(232,255,71,0.06) 0%, transparent 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+  }
+
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 2rem;
+  }
+
+  .food-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .food-card-header {
+    padding: 1.1rem 1.25rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .food-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .food-card-header h3 {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .food-card-header .timing {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .food-card-body { padding: 1rem 1.25rem; }
+
+  .food-card-body p {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 0.9rem;
+  }
+
+  .benefit-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .benefit-tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .bt-pro { background: rgba(71,194,255,0.12); color: var(--accent2); border: 1px solid rgba(71,194,255,0.2); }
+  .bt-carb { background: rgba(232,255,71,0.12); color: var(--accent); border: 1px solid rgba(232,255,71,0.2); }
+  .bt-fat { background: rgba(255,107,53,0.12); color: var(--accent3); border: 1px solid rgba(255,107,53,0.2); }
+  .bt-fiber { background: rgba(90,200,120,0.12); color: #6ee89a; border: 1px solid rgba(90,200,120,0.2); }
+  .bt-anti { background: rgba(180,100,255,0.12); color: #c090ff; border: 1px solid rgba(180,100,255,0.2); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* PROGRESS */
+  .prog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .prog-table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .prog-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .prog-table tr:hover td { background: var(--surface2); }
+
+  .prog-table .phase {
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1rem 2rem; }
+    .section { padding: 0 1rem 3rem; }
+    nav { padding: 0 1rem; }
+    nav button { padding: 0 0.75rem; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <button class="active" onclick="showPage('overview')">Resumen</button>
+  <button onclick="showPage('weekly')">Semana Tipo</button>
+  <button onclick="showPage('strength')">Fuerza</button>
+  <button onclick="showPage('running')">Running</button>
+  <button onclick="showPage('nutrition')">Nutrición</button>
+  <button onclick="showPage('periodization')">Periodización</button>
+</nav>
+
+<!-- ======================== OVERVIEW ======================== -->
+<div class="page active" id="page-overview">
+  <div class="hero">
+    <p class="hero-label">Plan Personalizado · 16 Semanas</p>
+    <h1>TU PLAN<br><span>ÓPTIMO</span></h1>
+    <p class="hero-sub">Rutina diseñada para ganar fuerza y masa muscular, reducir peso corporal y mejorar tu tiempo en 5K — con los recursos que tienes en casa.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Peso actual</div>
+        <div class="value">66.5</div>
+        <div class="unit">kg · IMC ~24.4</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Ritmo actual 5K</div>
+        <div class="value">6:08</div>
+        <div class="unit">min/km</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Volumen semanal</div>
+        <div class="value">17–20</div>
+        <div class="unit">km por semana</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Días entreno</div>
+        <div class="value">5</div>
+        <div class="unit">días activos / semana</div>
+      </div>
+    </div>
+
+    <div class="objectives">
+      <div class="obj-tag"><div class="dot" style="background:var(--accent)"></div>Ganar fuerza y masa muscular</div>
+      <div class="obj-tag"><div class="dot" style="background:var(--accent2)"></div>Reducir % grasa corporal</div>
+      <div class="obj-tag"><div class="dot" style="background:var(--accent3)"></div>Bajar tiempo en 5K</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análisis inicial</div>
+    <p class="section-sub">Lo que dicen tus datos antes de empezar</p>
+
+    <div class="tip-box">
+      <strong>Punto de partida sólido.</strong> Tu IMC de ~24.4 está dentro del rango saludable. Con 17–20 km semanales ya tienes una base aeróbica real. Tus tres objetivos (fuerza, composición, velocidad) no son contradictorios — con el enfoque correcto se refuerzan mutuamente durante los primeros 3–4 meses.
+    </p></div>
+
+    <div class="tip-box" style="border-left-color: var(--accent2); background: rgba(71,194,255,0.05); border-color: rgba(71,194,255,0.2);">
+      <strong>Punto de atención: dolor de espalda baja.</strong> Trabajar en casa mucho tiempo sentado + corrida en concreto puede tensar el psoas y los flexores de cadera. El plan incluye trabajo de movilidad y core antirotacional específico para esto. Prioriza el calentamiento lumbopélvico cada sesión.
+    </div>
+
+    <div class="tip-box" style="border-left-color: var(--accent3); background: rgba(255,107,53,0.05); border-color: rgba(255,107,53,0.2);">
+      <strong>Meta de tiempo 5K sugerida (16 semanas):</strong> pasar de 6:08 min/km (~30:40 total) a 5:20–5:30 min/km (~27:00–26:40 total). Esto representa una mejora del ~12–15% — realista con la periodización planificada.
+    </div>
+  </div>
+</div>
+
+<!-- ======================== WEEKLY ======================== -->
+<div class="page" id="page-weekly">
+  <div class="section" style="padding-top:3rem">
+    <div class="section-title">Semana tipo</div>
+    <p class="section-sub">Distribución de cargas semanales con tu disponibilidad real</p>
+
+    <div class="week-grid">
+      <!-- LUNES -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Lunes</div>
+          <div class="day-type type-fuerza">Fuerza</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Tarde-noche · ~60 min</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">A</div>
+              <div><div class="ex-name">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — puente glúteo, bird-dog, gato-vaca</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">1</div>
+              <div><div class="ex-name">Sentadilla con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 reps · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">2</div>
+              <div><div class="ex-name">Peso muerto rumano con barra (10 kg)</div><div class="ex-detail">4 × 10–12 reps · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">3</div>
+              <div><div class="ex-name">Zancadas alternas con mancuerna (25 lb)</div><div class="ex-detail">3 × 10 por pierna · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">4</div>
+              <div><div class="ex-name">Hip thrust en banco con polaina (5 kg)</div><div class="ex-detail">3 × 15 · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">5</div>
+              <div><div class="ex-name">Plancha frontal + plancha lateral</div><div class="ex-detail">3 × 40 s cada lado</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MARTES -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Martes</div>
+          <div class="day-type type-mixto">Cardio + Fuerza</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Mañana (carrera) + Tarde-noche (fuerza) · 30 + 50 min</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">🏃</div>
+              <div><div class="ex-name">Mañana: Carrera de velocidad</div><div class="ex-detail">3–4 km · Intervalos o tempo (ver sección Running)</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">1</div>
+              <div><div class="ex-name">Press de banca con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">2</div>
+              <div><div class="ex-name">Remo con mancuerna unilateral (35 lb)</div><div class="ex-detail">4 × 10 cada lado · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">3</div>
+              <div><div class="ex-name">Fondos (dips) en banco — calistenia</div><div class="ex-detail">3 × máx reps · 75 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">4</div>
+              <div><div class="ex-name">Curl bíceps con mancuerna (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MIÉRCOLES -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Miércoles</div>
+          <div class="day-type type-descanso">Descanso activo</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Día fijo de recuperación</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Movilidad y estiramiento</div><div class="ex-detail">15–20 min opcionales: cadera, isquiotibiales, pecho</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Caminar suave</div><div class="ex-detail">20–30 min si se desea — NEAT activo</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Hidratación y sueño prioritarios</div><div class="ex-detail">Objetivo: +7 h de sueño este día</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- JUEVES -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Jueves</div>
+          <div class="day-type type-fuerza">Fuerza</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Tarde-noche · ~60 min</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">A</div>
+              <div><div class="ex-name">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — clam shells, marcha de glúteo, roll columna</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">1</div>
+              <div><div class="ex-name">Sentadilla sumo con mancuerna (35 lb)</div><div class="ex-detail">4 × 10–12 · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">2</div>
+              <div><div class="ex-name">Extensión de cadera en 4 puntos (polaina 2 kg)</div><div class="ex-detail">3 × 15 por pierna · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">3</div>
+              <div><div class="ex-name">Step-up en banco aeróbics con mancuerna (15 lb c/u)</div><div class="ex-detail">3 × 12 por pierna · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">4</div>
+              <div><div class="ex-name">Abdominal bicicleta + elevación de piernas</div><div class="ex-detail">3 × 20 + 3 × 15 · 45 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">5</div>
+              <div><div class="ex-name">Plancha de hombros (shoulder tap)</div><div class="ex-detail">3 × 30 s</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- VIERNES -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Viernes</div>
+          <div class="day-type type-mixto">Cardio + Fuerza</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Mañana (carrera) + Tarde-noche (fuerza) · 30 + 50 min</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">🏃</div>
+              <div><div class="ex-name">Mañana: Carrera de velocidad / fartlek</div><div class="ex-detail">3–4 km · Tempo o fartlek (ver sección Running)</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">1</div>
+              <div><div class="ex-name">Press militar con mancuernas (25 lb c/u)</div><div class="ex-detail">4 × 10 · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">2</div>
+              <div><div class="ex-name">Elevaciones laterales (15 lb c/u)</div><div class="ex-detail">3 × 15 · 45 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">3</div>
+              <div><div class="ex-name">Remo al mentón con mancuernas (15 lb c/u)</div><div class="ex-detail">3 × 12 · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">4</div>
+              <div><div class="ex-name">Extensión tríceps overhead (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SÁBADO -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Sábado</div>
+          <div class="day-type type-cardio">Voleibol</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Mañana 8am–12pm · Día fijo</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Clases de voleibol (4 horas)</div><div class="ex-detail">Actividad cardiovascular de alta intensidad intermitente — cuenta como cardio activo</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Post-clase: recuperación activa</div><div class="ex-detail">10 min de estiramiento de piernas, hombros y espalda</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Comida post-voleibol importante</div><div class="ex-detail">Proteína + carbohidrato dentro de los 60 min post-actividad</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DOMINGO -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Domingo</div>
+          <div class="day-type type-cardio">Carrera larga</div>
+        </div>
+        <div class="day-body">
+          <div class="day-schedule">Mañana · 60–90 min</div>
+          <ul class="exercise-list">
+            <li>
+              <div class="ex-bullet">🏃</div>
+              <div><div class="ex-name">Long run: 10–15 km</div><div class="ex-detail">Ritmo conversacional ~6:30–6:50 min/km · No hero pace</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Post-carrera: movilidad de cadera</div><div class="ex-detail">5 min psoas, 5 min isquiotibiales, rodilla al pecho</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">✓</div>
+              <div><div class="ex-name">Descanso el resto del día</div><div class="ex-detail">Priorizar sueño 7–8 h esta noche para el Lunes</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tip-box">
+      <strong>Nota sobre doble sesión Mar/Vie:</strong> La carrera de velocidad va en ayunas o con desayuno ligero. Deja al menos 6–7 horas de separación antes de la sesión de fuerza de la tarde. Esto maximiza la adaptación de cada estímulo sin interferencia entre energéticos.
+    </div>
+  </div>
+</div>
+
+<!-- ======================== STRENGTH ======================== -->
+<div class="page" id="page-strength">
+  <div class="section" style="padding-top:3rem">
+    <div class="section-title">Guía de fuerza</div>
+    <p class="section-sub">Progresión, técnica y variantes con tu equipamiento</p>
+
+    <div class="divider"></div>
+
+    <div style="margin-bottom:2rem">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--accent);margin-bottom:0.5rem;letter-spacing:0.03em">TREN SUPERIOR</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.2rem">Lunes y Martes/Viernes tarde-noche</p>
+
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Ejercicio</th>
+            <th>Músculo principal</th>
+            <th>Peso inicial</th>
+            <th>Progresión</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Press banca mancuernas</strong></td>
+            <td style="color:var(--muted)">Pectoral, deltoides ant., tríceps</td>
+            <td>35 lb c/u</td>
+            <td style="color:var(--muted);font-size:13px">+2.5 lb cada 2 sem o +1 rep por set</td>
+          </tr>
+          <tr>
+            <td><strong>Remo unilateral</strong></td>
+            <td style="color:var(--muted)">Dorsal, trapecio, bíceps</td>
+            <td>35 lb</td>
+            <td style="color:var(--muted);font-size:13px">Cuando logres 12 reps limpias, sube peso</td>
+          </tr>
+          <tr>
+            <td><strong>Press militar mancuernas</strong></td>
+            <td style="color:var(--muted)">Deltoides, trapecio, tríceps</td>
+            <td>25 lb c/u</td>
+            <td style="color:var(--muted);font-size:13px">+rep antes de +peso</td>
+          </tr>
+          <tr>
+            <td><strong>Fondos (dips)</strong></td>
+            <td style="color:var(--muted)">Tríceps, pectoral inf., deltoides</td>
+            <td>Peso corporal</td>
+            <td style="color:var(--muted);font-size:13px">Agrega polaina 2 kg en semana 5+</td>
+          </tr>
+          <tr>
+            <td><strong>Elevaciones laterales</strong></td>
+            <td style="color:var(--muted)">Deltoides medial</td>
+            <td>15 lb c/u</td>
+            <td style="color:var(--muted);font-size:13px">Control total — sin impulso</td>
+          </tr>
+          <tr>
+            <td><strong>Curl bíceps</strong></td>
+            <td style="color:var(--muted)">Bíceps braquial</td>
+            <td>25 lb</td>
+            <td style="color:var(--muted);font-size:13px">Supinación completa en cada rep</td>
+          </tr>
+          <tr>
+            <td><strong>Extensión tríceps overhead</strong></td>
+            <td style="color:var(--muted)">Tríceps (cabeza larga)</td>
+            <td>25 lb</td>
+            <td style="color:var(--muted);font-size:13px">Codos pegados a la cabeza</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-bottom:2rem">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--accent3);margin-bottom:0.5rem;letter-spacing:0.03em">TREN INFERIOR</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.2rem">Lunes y Jueves tarde-noche</p>
+
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Ejercicio</th>
+            <th>Músculo principal</th>
+            <th>Peso inicial</th>
+            <th>Progresión</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sentadilla mancuernas (goblet)</strong></td>
+            <td style="color:var(--muted)">Cuádriceps, glúteo, core</td>
+            <td>35 lb</td>
+            <td style="color:var(--muted);font-size:13px">Profundidad completa (90°+) antes de sumar peso</td>
+          </tr>
+          <tr>
+            <td><strong>Peso muerto rumano barra</strong></td>
+            <td style="color:var(--muted)">Isquiotibiales, glúteo, erectores</td>
+            <td>Barra 10 kg</td>
+            <td style="color:var(--muted);font-size:13px">Bisagra de cadera — espalda neutral siempre</td>
+          </tr>
+          <tr>
+            <td><strong>Zancadas alternas</strong></td>
+            <td style="color:var(--muted)">Cuádriceps, glúteo, equilibrio</td>
+            <td>25 lb c/u</td>
+            <td style="color:var(--muted);font-size:13px">Paso amplio, rodilla no pasa la punta del pie</td>
+          </tr>
+          <tr>
+            <td><strong>Hip thrust en banco</strong></td>
+            <td style="color:var(--muted)">Glúteo mayor (aislado)</td>
+            <td>Polaina 5 kg</td>
+            <td style="color:var(--muted)font-size:13px">Contracción máxima 1 seg en la cima</td>
+          </tr>
+          <tr>
+            <td><strong>Sentadilla sumo mancuerna</strong></td>
+            <td style="color:var(--muted)">Glúteo, aductores, cuádriceps</td>
+            <td>35 lb</td>
+            <td style="color:var(--muted);font-size:13px">Pies a 45°, rodillas hacia afuera</td>
+          </tr>
+          <tr>
+            <td><strong>Step-up en banco</strong></td>
+            <td style="color:var(--muted)">Cuádriceps, glúteo, equilibrio</td>
+            <td>15 lb c/u</td>
+            <td style="color:var(--muted);font-size:13px">Empuja desde el talón del pie elevado</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--accent2);margin-bottom:0.5rem;letter-spacing:0.03em">CORE Y LUMBAR</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.2rem">Todos los días de fuerza — específico para dolor de espalda baja</p>
+
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Ejercicio</th>
+            <th>Función</th>
+            <th>Dosis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bird-dog</strong></td>
+            <td style="color:var(--muted)">Estabilización lumbar antirotacional</td>
+            <td>3 × 10 alternos, 3 s hold</td>
+          </tr>
+          <tr>
+            <td><strong>Puente glúteo</strong></td>
+            <td style="color:var(--muted)">Activa glúteo, libera tensión lumbar</td>
+            <td>3 × 15, 2 s hold arriba</td>
+          </tr>
+          <tr>
+            <td><strong>Plancha frontal</strong></td>
+            <td style="color:var(--muted)">Core global, protege lumbar</td>
+            <td>3 × 40 s</td>
+          </tr>
+          <tr>
+            <td><strong>Plancha lateral</strong></td>
+            <td style="color:var(--muted)">Oblicuos, cuadrado lumbar</td>
+            <td>3 × 30 s cada lado</td>
+          </tr>
+          <tr>
+            <td><strong>Muerto de insecto (Dead Bug)</strong></td>
+            <td style="color:var(--muted)">Presión intraabdominal — el mejor para lumbar</td>
+            <td>3 × 8 alternos, 3 s hold</td>
+          </tr>
+          <tr>
+            <td><strong>Gato-Vaca</strong></td>
+            <td style="color:var(--muted)">Movilidad de columna, calientamiento</td>
+            <td>2 × 10 respiraciones lentas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box" style="margin-top:2rem">
+      <strong>Regla de progresión doble (Rep-Peso):</strong> primero llega al máximo de reps indicado con buena técnica, luego sube peso la siguiente semana. Nunca aumentes peso si la forma sufre. Para el peso muerto rumano, graba un video de perfil ocasionalmente para verificar tu bisagra de cadera — es el ejercicio más técnico del plan.
+    </div>
+  </div>
+</div>
+
+<!-- ======================== RUNNING ======================== -->
+<div class="page" id="page-running">
+  <div class="section" style="padding-top:3rem">
+    <div class="section-title">Plan de running</div>
+    <p class="section-sub">Estructura de sesiones para bajar de 6:08 a ~5:20 min/km en 16 semanas</p>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;color:var(--accent);margin-bottom:1rem;letter-spacing:0.04em">TIPOS DE SESIÓN</h3>
+
+    <div class="run-block">
+      <h3>Martes — Intervalos de velocidad (4–5 km)</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:0.5rem">Desarrolla VO₂ máximo y economía de carrera</p>
+      <div class="run-detail">
+        <div class="run-metric"><div class="lbl">Calentamiento</div><div class="val">1.5 km suave</div></div>
+        <div class="run-metric"><div class="lbl">Trabajo</div><div class="val">6–8 × 400 m</div></div>
+        <div class="run-metric"><div class="lbl">Ritmo trabajo</div><div class="val" style="color:var(--accent)">4:45–5:00 min/km</div></div>
+        <div class="run-metric"><div class="lbl">Descanso entre</div><div class="val">90 s caminando</div></div>
+        <div class="run-metric"><div class="lbl">Vuelta</div><div class="val">1 km suave</div></div>
+      </div>
+    </div>
+
+    <div class="run-block">
+      <h3>Viernes — Tempo / Fartlek (3–4 km)</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:0.5rem">Eleva el umbral anaeróbico — la clave para bajar tiempos en 5K</p>
+      <div class="run-detail">
+        <div class="run-metric"><div class="lbl">Calentamiento</div><div class="val">1 km suave</div></div>
+        <div class="run-metric"><div class="lbl">Bloque tempo</div><div class="val">2 km continuos</div></div>
+        <div class="run-metric"><div class="lbl">Ritmo tempo</div><div class="val" style="color:var(--accent)">5:20–5:35 min/km</div></div>
+        <div class="run-metric"><div class="lbl">Sensación</div><div class="val">"Duro pero sostenible"</div></div>
+        <div class="run-metric"><div class="lbl">Vuelta</div><div class="val">1 km suave</div></div>
+      </div>
+    </div>
+
+    <div class="run-block">
+      <h3>Domingo — Carrera larga (10–15 km)</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:0.5rem">Construye base aeróbica y resistencia fundamental</p>
+      <div class="run-detail">
+        <div class="run-metric"><div class="lbl">Distancia</div><div class="val">10–15 km</div></div>
+        <div class="run-metric"><div class="lbl">Ritmo</div><div class="val" style="color:var(--accent2)">6:30–6:50 min/km</div></div>
+        <div class="run-metric"><div class="lbl">Regla</div><div class="val">Puedes hablar cómodo</div></div>
+        <div class="run-metric"><div class="lbl">Hidratación</div><div class="val">Lleva agua si >12 km</div></div>
+        <div class="run-metric"><div class="lbl">Post-carrera</div><div class="val">Movilidad 10 min</div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;color:var(--accent);margin-bottom:1rem;letter-spacing:0.04em">PROGRESIÓN DE VOLUMEN POR FASE</h3>
+
+    <table class="prog-table">
+      <thead>
+        <tr>
+          <th>Semanas</th>
+          <th>Fase</th>
+          <th>Volumen semanal</th>
+          <th>Objetivo de ritmo 5K</th>
+          <th>Foco</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="phase">1–4</td>
+          <td>Base y adaptación</td>
+          <td>18–22 km</td>
+          <td style="color:var(--muted)">5:55–6:00 min/km</td>
+          <td style="color:var(--muted);font-size:13px">Técnica, consistencia, cadencia (170–175 ppm)</td>
+        </tr>
+        <tr>
+          <td class="phase">5–8</td>
+          <td>Construcción</td>
+          <td>22–27 km</td>
+          <td style="color:var(--muted)">5:40–5:50 min/km</td>
+          <td style="color:var(--muted);font-size:13px">Aumentar intensidad intervalos, tempo 2.5 km</td>
+        </tr>
+        <tr>
+          <td class="phase">9–12</td>
+          <td>Carga progresiva</td>
+          <td>27–32 km</td>
+          <td style="color:var(--muted)">5:25–5:35 min/km</td>
+          <td style="color:var(--muted);font-size:13px">Intervalos 600–800 m, tempo 3 km</td>
+        </tr>
+        <tr>
+          <td class="phase">13–14</td>
+          <td>Carga máxima</td>
+          <td>30–35 km</td>
+          <td style="color:var(--muted)">5:15–5:25 min/km</td>
+          <td style="color:var(--muted);font-size:13px">Simular ritmo de carrera en entrenamientos</td>
+        </tr>
+        <tr>
+          <td class="phase">15–16</td>
+          <td>Taper y test</td>
+          <td>18–22 km</td>
+          <td style="color:var(--accent)">5:20 min/km objetivo</td>
+          <td style="color:var(--muted);font-size:13px">Reducir 30–40% volumen, mantener intensidad</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box" style="margin-top:1.5rem">
+      <strong>Cadencia objetivo:</strong> Trabaja para llegar a 175–180 pasos por minuto. Tu ritmo actual probablemente ronda los 165–170. Esto mejora la economía de carrera y reduce el impacto en el concreto — fundamental para tu salud lumbar. Usa el metrónomo de tu celular durante los primeros 2–3 km de cada sesión.
+    </div>
+
+    <div class="tip-box" style="border-left-color: var(--accent3); background: rgba(255,107,53,0.05); border-color: rgba(255,107,53,0.2);">
+      <strong>Concreto y espalda baja:</strong> Siempre que sea posible, busca superficies de tierra o pasto para el long run del domingo. Si solo hay concreto, considera zapatillas con amortiguación máxima (Hoka, Asics Gel, Brooks Ghost) para reducir el impacto acumulado.
+    </div>
+  </div>
+</div>
+
+<!-- ======================== NUTRITION ======================== -->
+<div class="page" id="page-nutrition">
+  <div class="nutrition-hero">
+    <div style="max-width:960px;margin:0 auto">
+      <p class="hero-label">Nutrición deportiva</p>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);line-height:0.95;margin-bottom:1rem">ALIMENTOS<br><span style="color:var(--accent)">CLAVE</span></h2>
+      <p style="color:var(--muted);max-width:500px;font-size:15px;line-height:1.7">Guía de nutrición pre y post entrenamiento con los alimentos más eficaces para tus objetivos de composición corporal y rendimiento.</p>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:2.5rem">
+
+    <h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--accent2);margin-bottom:0.4rem;letter-spacing:0.04em">PRE-ENTRENAMIENTO</h3>
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:1.5rem">Consumir 60–90 minutos antes de la sesión. Prioridad: energía sostenida y protección muscular.</p>
+
+    <div class="food-grid">
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(232,255,71,0.12)">🍌</div>
+          <div>
+            <h3>Plátano</h3>
+            <div class="timing">Pre-entreno · 30–60 min antes</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Rico en carbohidratos de rápida absorción, potasio (previene calambres) y vitamina B6. Es el combustible pre-entreno más práctico que ya tienes en casa. Una unidad aporta ~27 g de carbohidratos y ~100 kcal.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-carb">Energía rápida</span>
+            <span class="benefit-tag bt-anti">Anti-calambres</span>
+            <span class="benefit-tag bt-fiber">Digestión fácil</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(71,194,255,0.12)">🥚</div>
+          <div>
+            <h3>Huevo entero</h3>
+            <div class="timing">Pre-entreno · 60–90 min antes</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Proteína completa con todos los aminoácidos esenciales (6 g por huevo). La yema aporta colina, fundamental para la función muscular y el sistema nervioso. 2–3 huevos antes de fuerza brindan aminoácidos disponibles durante la sesión.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-pro">Proteína completa</span>
+            <span class="benefit-tag bt-fat">Grasas saludables</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(255,107,53,0.12)">🍎</div>
+          <div>
+            <h3>Manzana</h3>
+            <div class="timing">Pre-entreno · 45–60 min antes</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Fructosa + glucosa con fibra soluble (pectina) que estabiliza el azúcar en sangre y evita el bajón energético a mitad de sesión. Ligera y de fácil digestión — ideal antes de correr. Aporta quercetina, un antioxidante antiinflamatorio.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-carb">Energía estable</span>
+            <span class="benefit-tag bt-anti">Antioxidante</span>
+            <span class="benefit-tag bt-fiber">Fibra soluble</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(90,200,120,0.12)">🥑</div>
+          <div>
+            <h3>Aguacate (porción moderada)</h3>
+            <div class="timing">Pre-entreno · 90 min antes</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Grasas monoinsaturadas que reducen la inflamación crónica y mejoran la recuperación. Rico en potasio (~485 mg en ¼ pieza). Consume solo en sesiones de fuerza, no antes de carrera de velocidad — las grasas ralentizan el vaciado gástrico.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-fat">Grasas saludables</span>
+            <span class="benefit-tag bt-anti">Antiinflamatorio</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--accent);margin-bottom:0.4rem;letter-spacing:0.04em">POST-ENTRENAMIENTO</h3>
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:1.5rem">Consumir dentro de los 30–60 minutos posteriores. Prioridad: síntesis proteica y reposición de glucógeno.</p>
+
+    <div class="food-grid">
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(71,194,255,0.12)">🍗</div>
+          <div>
+            <h3>Pechuga de pollo</h3>
+            <div class="timing">Post-entreno · primera comida</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>La fuente proteica más eficiente para síntesis muscular post-ejercicio. 100 g aportan ~31 g de proteína con bajo contenido en grasa. El perfil de leucina es especialmente alto — el aminoácido que activa el interruptor de la síntesis proteica (mTOR).</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-pro">Alta leucina</span>
+            <span class="benefit-tag bt-pro">Síntesis muscular</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(232,255,71,0.12)">🍚</div>
+          <div>
+            <h3>Arroz blanco</h3>
+            <div class="timing">Post-entreno · con proteína</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Carbohidrato de alto índice glucémico — exactamente lo que necesitas post-entreno para reponer glucógeno muscular rápidamente. Una porción de ½ taza cocida (~90 g) aporta ~29 g de carbs disponibles. No temas el arroz blanco en esta ventana.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-carb">Reposición glucógeno</span>
+            <span class="benefit-tag bt-carb">Absorción rápida</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(255,107,53,0.12)">🍅</div>
+          <div>
+            <h3>Jitomate y lechuga</h3>
+            <div class="timing">Post-entreno · con la comida</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>El jitomate aporta licopeno (antioxidante que reduce el daño muscular post-ejercicio) y vitamina C (síntesis de colágeno para tendones y ligamentos). La lechuga hidrata y aporta folato. Tu ensalada actual ya es un excelente combo.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-anti">Licopeno</span>
+            <span class="benefit-tag bt-anti">Vitamina C</span>
+            <span class="benefit-tag bt-fiber">Hidratación</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(90,200,120,0.12)">🥚</div>
+          <div>
+            <h3>Huevo (post-fuerza nocturno)</h3>
+            <div class="timing">Post-entreno nocturno · sándwich de huevo</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Tu sándwich de huevo nocturno es estratégicamente bueno. La caseína y proteínas de digestión lenta del huevo cocido liberan aminoácidos durante las horas de sueño — el período de máxima síntesis de GH y recuperación muscular.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-pro">Proteína nocturna</span>
+            <span class="benefit-tag bt-pro">Recuperación sueño</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(232,255,71,0.12)">💧</div>
+          <div>
+            <h3>Hidratación post-carrera</h3>
+            <div class="timing">Post-entreno · inmediato</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Con 17–20 km semanales en concreto y clima de CDMX, pierdes ~0.5–0.8 L por sesión. Tu objetivo de 1.5–2 L/día puede quedarse corto. Los días de entrenamiento apunta a 2.5–3 L. Agrega una pizca de sal y limón al agua post-carrera larga para reponer electrolitos.</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-anti">Electrolitos</span>
+            <span class="benefit-tag bt-fiber">Recuperación</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <div class="food-card-header">
+          <div class="food-icon" style="background:rgba(180,100,255,0.12)">🫐</div>
+          <div>
+            <h3>Alimentos sugeridos a agregar</h3>
+            <div class="timing">Sugerencia de incorporación gradual</div>
+          </div>
+        </div>
+        <div class="food-card-body">
+          <p>Para potenciar tus resultados: <strong style="color:var(--text)">yogur griego</strong> (caseína + probióticos), <strong style="color:var(--text)">nueces/almendras</strong> (omega-3, grasas saludables), <strong style="color:var(--text)">avena</strong> (carb complejo perfecto para mañanas de entreno), <strong style="color:var(--text)">betabel</strong> (nitratos que mejoran el rendimiento aeróbico 2–3 horas antes de correr).</p>
+          <div class="benefit-tags">
+            <span class="benefit-tag bt-pro">Caseína</span>
+            <span class="benefit-tag bt-fat">Omega-3</span>
+            <span class="benefit-tag bt-carb">Beta-glucano</span>
+            <span class="benefit-tag bt-anti">Nitratos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--accent3);margin-bottom:1rem;letter-spacing:0.04em">ANÁLISIS DE TU DIETA ACTUAL</h3>
+
+    <div class="tip-box">
+      <strong>Lo que ya haces bien:</strong> desayuno con proteína + grasa saludable (huevo + aguacate) + carb (fruta). Comida con proteína magra + verduras + arroz. Cena con proteína. Esta estructura de 3 comidas es sólida. Tu consumo de aguacate es excelente para la salud cardiovascular y la recuperación.
+    </div>
+
+    <div class="tip-box" style="border-left-color:var(--accent3);background:rgba(255,107,53,0.05);border-color:rgba(255,107,53,0.2)">
+      <strong>Áreas de mejora:</strong> (1) La gelatina de desayuno aporta poco valor nutricional — sustitúyela por yogur griego cuando sea posible. (2) Las galletas Marías son azúcar vacío antes de dormir — reemplaza por 1–2 nueces o un trozo pequeño de chocolate oscuro 70%+. (3) Aumenta el consumo de agua los días de entrenamiento a 2.5–3 L mínimo.
+    </div>
+
+    <div class="tip-box" style="border-left-color:var(--accent2);background:rgba(71,194,255,0.05);border-color:rgba(71,194,255,0.2)">
+      <strong>Objetivo calórico estimado:</strong> Para ganar masa muscular mientras bajas grasa (recomposición corporal), apunta a un déficit moderado de ~200–300 kcal/día. Tu gasto energético diario estimado es ~2,200–2,400 kcal (peso + actividad). Consume entre 1,900–2,100 kcal/día con alta proteína (130–150 g/día). En días de carrera larga (domingo), sube a mantenimiento (~2,300 kcal).
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PERIODIZATION ======================== -->
+<div class="page" id="page-periodization">
+  <div class="section" style="padding-top:3rem">
+    <div class="section-title">Periodización · 16 semanas</div>
+    <p class="section-sub">El mapa macro de tu progreso — cómo evolucionan las cargas en el tiempo</p>
+
+    <div class="divider"></div>
+
+    <table class="prog-table" style="margin-bottom:2rem">
+      <thead>
+        <tr>
+          <th>Semanas</th>
+          <th>Fase</th>
+          <th>Fuerza</th>
+          <th>Running</th>
+          <th>Recuperación</th>
+          <th>Meta principal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="phase">1–4</td>
+          <td><strong>Adaptación</strong></td>
+          <td style="color:var(--muted);font-size:13px">3–4 series × 12–15 reps<br>Cargas moderadas<br>Énfasis en técnica</td>
+          <td style="color:var(--muted);font-size:13px">Mantener 18–22 km<br>Intervalos 400 m × 6<br>Long run 10 km</td>
+          <td style="color:var(--accent);font-size:13px">Alta — establece hábito</td>
+          <td style="color:var(--muted);font-size:13px">Automatizar rutina, cero lesiones, dormir mejor</td>
+        </tr>
+        <tr>
+          <td class="phase">5–8</td>
+          <td><strong>Construcción</strong></td>
+          <td style="color:var(--muted);font-size:13px">4 series × 8–12 reps<br>+carga progresiva<br>Intensidad media-alta</td>
+          <td style="color:var(--muted);font-size:13px">22–27 km<br>Intervalos 400 m × 8<br>Tempo 2.5 km<br>Long run 13 km</td>
+          <td style="color:var(--accent);font-size:13px">Media — mide señales</td>
+          <td style="color:var(--muted);font-size:13px">Primera mejora de marca, +masa muscular visible</td>
+        </tr>
+        <tr>
+          <td class="phase">9–12</td>
+          <td><strong>Carga progresiva</strong></td>
+          <td style="color:var(--muted);font-size:13px">4–5 series × 6–10 reps<br>Cargas máximas<br>Drop sets opcionales</td>
+          <td style="color:var(--muted);font-size:13px">27–32 km<br>Intervalos 600 m × 6<br>Tempo 3 km<br>Long run 15 km</td>
+          <td style="color:var(--accent3);font-size:13px">Baja — prioritaria</td>
+          <td style="color:var(--muted);font-size:13px">Pico de volumen y fuerza — máximo estímulo</td>
+        </tr>
+        <tr>
+          <td class="phase">13–14</td>
+          <td><strong>Intensificación</strong></td>
+          <td style="color:var(--muted);font-size:13px">4 series × 5–8 reps<br>Carga muy alta<br>RPE 8–9</td>
+          <td style="color:var(--muted);font-size:13px">30–35 km<br>Intervalos a ritmo carrera<br>Long run 15 km fuerte</td>
+          <td style="color:var(--accent3);font-size:13px">Crítica — no negocies</td>
+          <td style="color:var(--muted);font-size:13px">Adaptación máxima antes del taper</td>
+        </tr>
+        <tr>
+          <td class="phase">15–16</td>
+          <td><strong>Taper + Test</strong></td>
+          <td style="color:var(--muted);font-size:13px">3 series × 8 reps<br>Cargas medias<br>-30% volumen</td>
+          <td style="color:var(--muted);font-size:13px">18–20 km<br>1–2 sesiones cortas de velocidad<br>Test 5K semana 16</td>
+          <td style="color:var(--accent);font-size:13px">Alta — sueño y nutrición</td>
+          <td style="color:var(--muted);font-size:13px">Llegar fresco al test. <strong style="color:var(--accent)">Meta: 5:20 min/km</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;color:var(--accent2);margin-bottom:1rem;letter-spacing:0.04em">SEÑALES DE ALARMA — CUÁNDO BAJAR LA CARGA</h3>
+
+    <div class="tip-box" style="border-left-color:#ff4444;background:rgba(255,68,68,0.05);border-color:rgba(255,68,68,0.2)">
+      <strong>Para inmediatamente si sientes:</strong> dolor agudo en zona lumbar durante ejercicio, dolor en rodilla al bajar escaleras, dolor en tendón de Aquiles o en la planta del pie al levantarte. Estos no son "dolorcitos normales" — son señales de sobrecarga que debes atender antes de continuar.
+    </div>
+
+    <div class="tip-box">
+      <strong>Señales de sobreentrenamiento a vigilar:</strong> frecuencia cardíaca en reposo elevada (+5–7 bpm sobre tu normal), irritabilidad, sueño fragmentado a pesar del cansancio, rendimiento en caída durante 2+ sesiones seguidas. Si aparecen 3 o más: toma 3–5 días de descanso activo (solo caminar) antes de retomar.
+    </div>
+
+    <div class="tip-box" style="border-left-color:var(--accent);background:rgba(232,255,71,0.05);border-color:rgba(232,255,71,0.2)">
+      <strong>Estrategia de deload (semanas 4, 8, 12):</strong> Cada 4 semanas reduce el volumen al 60% (menos sets o distancia, misma intensidad). No es perder tiempo — es cuando el cuerpo consolida las adaptaciones. Muchos runners y levantadores ven sus mejores marcas después de un buen deload.
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;color:var(--accent);margin-bottom:1rem;letter-spacing:0.04em">MÉTRICAS A REGISTRAR SEMANALMENTE</h3>
+
+    <table class="prog-table">
+      <thead>
+        <tr>
+          <th>Métrica</th>
+          <th>Cómo medirla</th>
+          <th>Frecuencia</th>
+          <th>Por qué importa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Peso corporal</strong></td>
+          <td style="color:var(--muted);font-size:13px">Mismo día, mismo horario, en ayunas</td>
+          <td>1× semana</td>
+          <td style="color:var(--muted);font-size:13px">Detecta tendencias, no obsesiones diarias</td>
+        </tr>
+        <tr>
+          <td><strong>Ritmo en sesión tempo</strong></td>
+          <td style="color:var(--muted);font-size:13px">GPS o app de carrera</td>
+          <td>Cada viernes</td>
+          <td style="color:var(--muted);font-size:13px">Indicador directo de umbral anaeróbico</td>
+        </tr>
+        <tr>
+          <td><strong>Cargas de trabajo</strong></td>
+          <td style="color:var(--muted);font-size:13px">Anota peso × sets × reps</td>
+          <td>Cada sesión</td>
+          <td style="color:var(--muted);font-size:13px">Garantiza progresión real, no percibida</td>
+        </tr>
+        <tr>
+          <td><strong>Calidad del sueño</strong></td>
+          <td style="color:var(--muted);font-size:13px">Escala subjetiva 1–10</td>
+          <td>Diaria</td>
+          <td style="color:var(--muted);font-size:13px">Correlaciona con rendimiento y lumbar</td>
+        </tr>
+        <tr>
+          <td><strong>Dolor de espalda baja</strong></td>
+          <td style="color:var(--muted);font-size:13px">Escala 0–10 en las mañanas</td>
+          <td>Diaria</td>
+          <td style="color:var(--muted);font-size:13px">Si sube consistentemente, revisar técnica o descanso</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:3rem;padding:2rem;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)">
+      <p style="font-family:var(--font-display);font-size:1.3rem;color:var(--accent);letter-spacing:0.05em;margin-bottom:0.75rem">NOTA FINAL DEL PREPARADOR</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.75;max-width:700px">La consistencia supera a la perfección. Seguir el 80% del plan durante 16 semanas produce mejores resultados que seguir el 100% durante 4 semanas y abandonar. Adapta cuando sea necesario, escucha tu cuerpo, y prioriza el sueño como si fuera una sesión de entrenamiento más — porque lo es. En 4 meses tienes todo lo necesario para alcanzar los tres objetivos planteados.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const btns = document.querySelectorAll('nav button');
+    const pages = ['overview','weekly','strength','running','nutrition','periodization'];
+    btns[pages.indexOf(id)].classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
+
+</body>
+</html>

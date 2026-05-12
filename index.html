@@ -548,6 +548,89 @@
       padding-bottom: 0.5rem;
     }
   }
+
+  /* Ejercicios clickeables */
+  .ex-name[data-img] {
+    cursor: pointer;
+    color: var(--accent2);
+    transition: color 0.15s;
+  }
+  .ex-name[data-img]:hover { color: var(--text); }
+  .ex-name[data-img]::after {
+    content: ' ↗';
+    font-size: 10px;
+    opacity: 0.45;
+    font-weight: 400;
+  }
+
+  td strong[data-img] {
+    cursor: pointer;
+    border-bottom: 1px dotted rgba(232,255,71,0.45);
+    padding-bottom: 1px;
+    transition: color 0.15s;
+  }
+  td strong[data-img]:hover { color: var(--accent); }
+
+  /* Modal imagen ejercicio */
+  #ex-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0,0,0,0.82);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(6px);
+  }
+  #ex-modal.active { display: flex; }
+  .modal-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    max-width: 560px;
+    width: 100%;
+    overflow: hidden;
+    animation: modalIn 0.18s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  #modal-img {
+    width: 100%;
+    display: block;
+    max-height: 420px;
+    object-fit: cover;
+    background: var(--bg);
+    object-fit: contain;
+  }
+  .modal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .modal-label {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .modal-btn-close {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    border-radius: var(--radius-sm);
+    padding: 5px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .modal-btn-close:hover { color: var(--text); border-color: var(--muted2); }
 </style>
 </head>
 <body>
@@ -643,27 +726,27 @@
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">A</div>
-              <div><div class="ex-name">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — puente glúteo, bird-dog, gato-vaca</div></div>
+              <div><div class="ex-name" data-img="Calentamiento lumbopélvico.jpeg">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — puente glúteo, bird-dog, gato-vaca</div></div>
             </li>
             <li>
               <div class="ex-bullet">1</div>
-              <div><div class="ex-name">Sentadilla con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 reps · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Sentadilla con mancuernas (35 lb c:u).jpeg">Sentadilla con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 reps · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name">Peso muerto rumano con barra (10 kg)</div><div class="ex-detail">4 × 10–12 reps · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Peso muerto rumano con barra (10 kg).jpeg">Peso muerto rumano con barra (10 kg)</div><div class="ex-detail">4 × 10–12 reps · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
-              <div><div class="ex-name">Zancadas alternas con mancuerna (25 lb)</div><div class="ex-detail">3 × 10 por pierna · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Zancadas alternas con mancuerna (25 lb).jpeg">Zancadas alternas con mancuerna (25 lb)</div><div class="ex-detail">3 × 10 por pierna · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">4</div>
-              <div><div class="ex-name">Hip thrust en banco con polaina (5 kg)</div><div class="ex-detail">3 × 15 · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Hip thrust en banco con polaina (5 kg).jpeg">Hip thrust en banco con polaina (5 kg)</div><div class="ex-detail">3 × 15 · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">5</div>
-              <div><div class="ex-name">Plancha frontal + plancha lateral</div><div class="ex-detail">3 × 40 s cada lado</div></div>
+              <div><div class="ex-name" data-img="Plancha frontal + plancha lateral.jpeg">Plancha frontal + plancha lateral</div><div class="ex-detail">3 × 40 s cada lado</div></div>
             </li>
           </ul>
         </div>
@@ -680,23 +763,23 @@
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">🏃</div>
-              <div><div class="ex-name">Mañana: Carrera de velocidad</div><div class="ex-detail">3–4 km · Intervalos o tempo (ver sección Running)</div></div>
+              <div><div class="ex-name" data-img="Carrera de velocidad.jpeg">Mañana: Carrera de velocidad</div><div class="ex-detail">3–4 km · Intervalos o tempo (ver sección Running)</div></div>
             </li>
             <li>
               <div class="ex-bullet">1</div>
-              <div><div class="ex-name">Press de banca con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Press de banca con mancuernas (35 lb c:u).jpeg">Press de banca con mancuernas (35 lb c/u)</div><div class="ex-detail">4 × 8–10 · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name">Remo con mancuerna unilateral (35 lb)</div><div class="ex-detail">4 × 10 cada lado · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Remo con mancuerna unilateral (35 lb).jpeg">Remo con mancuerna unilateral (35 lb)</div><div class="ex-detail">4 × 10 cada lado · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
-              <div><div class="ex-name">Fondos (dips) en banco — calistenia</div><div class="ex-detail">3 × máx reps · 75 s descanso</div></div>
+              <div><div class="ex-name" data-img="Fondos (dips) en banco — calistenia.jpeg">Fondos (dips) en banco — calistenia</div><div class="ex-detail">3 × máx reps · 75 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">4</div>
-              <div><div class="ex-name">Curl bíceps con mancuerna (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
+              <div><div class="ex-name" data-img="Curl bíceps con mancuerna (25 lb).jpeg">Curl bíceps con mancuerna (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
             </li>
           </ul>
         </div>
@@ -738,27 +821,27 @@
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">A</div>
-              <div><div class="ex-name">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — clam shells, marcha de glúteo, roll columna</div></div>
+              <div><div class="ex-name" data-img="Calentamiento lumbopélvico.jpeg">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — clam shells, marcha de glúteo, roll columna</div></div>
             </li>
             <li>
               <div class="ex-bullet">1</div>
-              <div><div class="ex-name">Sentadilla sumo con mancuerna (35 lb)</div><div class="ex-detail">4 × 10–12 · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Sentadilla sumo con mancuerna (35 lb).jpeg">Sentadilla sumo con mancuerna (35 lb)</div><div class="ex-detail">4 × 10–12 · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name">Extensión de cadera en 4 puntos (polaina 2 kg)</div><div class="ex-detail">3 × 15 por pierna · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Extensión de cadera en 4 puntos (polaina 2 kg).jpeg">Extensión de cadera en 4 puntos (polaina 2 kg)</div><div class="ex-detail">3 × 15 por pierna · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
-              <div><div class="ex-name">Step-up en banco aeróbics con mancuerna (15 lb c/u)</div><div class="ex-detail">3 × 12 por pierna · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Step-up en banco aeróbics con mancuerna (15 lb c:u).jpeg">Step-up en banco aeróbics con mancuerna (15 lb c/u)</div><div class="ex-detail">3 × 12 por pierna · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">4</div>
-              <div><div class="ex-name">Abdominal bicicleta + elevación de piernas</div><div class="ex-detail">3 × 20 + 3 × 15 · 45 s descanso</div></div>
+              <div><div class="ex-name" data-img="Abdominal bicicleta + elevación de piernas.jpeg">Abdominal bicicleta + elevación de piernas</div><div class="ex-detail">3 × 20 + 3 × 15 · 45 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">5</div>
-              <div><div class="ex-name">Plancha de hombros (shoulder tap)</div><div class="ex-detail">3 × 30 s</div></div>
+              <div><div class="ex-name" data-img="Plancha de hombros (shoulder tap).jpeg">Plancha de hombros (shoulder tap)</div><div class="ex-detail">3 × 30 s</div></div>
             </li>
           </ul>
         </div>
@@ -775,23 +858,23 @@
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">🏃</div>
-              <div><div class="ex-name">Mañana: Carrera de velocidad / fartlek</div><div class="ex-detail">3–4 km · Tempo o fartlek (ver sección Running)</div></div>
+              <div><div class="ex-name" data-img="Carrera de velocidad : fartlek.jpeg">Mañana: Carrera de velocidad / fartlek</div><div class="ex-detail">3–4 km · Tempo o fartlek (ver sección Running)</div></div>
             </li>
             <li>
               <div class="ex-bullet">1</div>
-              <div><div class="ex-name">Press militar con mancuernas (25 lb c/u)</div><div class="ex-detail">4 × 10 · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Press militar con mancuernas (25 lb c:u).jpeg">Press militar con mancuernas (25 lb c/u)</div><div class="ex-detail">4 × 10 · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name">Elevaciones laterales (15 lb c/u)</div><div class="ex-detail">3 × 15 · 45 s descanso</div></div>
+              <div><div class="ex-name" data-img="Elevaciones laterales (15 lb c:u).jpeg">Elevaciones laterales (15 lb c/u)</div><div class="ex-detail">3 × 15 · 45 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
-              <div><div class="ex-name">Remo al mentón con mancuernas (15 lb c/u)</div><div class="ex-detail">3 × 12 · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Remo al mentón con mancuernas (15 lb c:u).jpeg">Remo al mentón con mancuernas (15 lb c/u)</div><div class="ex-detail">3 × 12 · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">4</div>
-              <div><div class="ex-name">Extensión tríceps overhead (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
+              <div><div class="ex-name" data-img="Extensión tríceps overhead (25 lb).jpeg">Extensión tríceps overhead (25 lb)</div><div class="ex-detail">3 × 12 · 45 s descanso</div></div>
             </li>
           </ul>
         </div>
@@ -878,43 +961,43 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Press banca mancuernas</strong></td>
+            <td><strong data-img="Press de banca con mancuernas (35 lb c:u).jpeg">Press banca mancuernas</strong></td>
             <td style="color:var(--muted)">Pectoral, deltoides ant., tríceps</td>
             <td>35 lb c/u</td>
             <td style="color:var(--muted);font-size:13px">+2.5 lb cada 2 sem o +1 rep por set</td>
           </tr>
           <tr>
-            <td><strong>Remo unilateral</strong></td>
+            <td><strong data-img="Remo con mancuerna unilateral (35 lb).jpeg">Remo unilateral</strong></td>
             <td style="color:var(--muted)">Dorsal, trapecio, bíceps</td>
             <td>35 lb</td>
             <td style="color:var(--muted);font-size:13px">Cuando logres 12 reps limpias, sube peso</td>
           </tr>
           <tr>
-            <td><strong>Press militar mancuernas</strong></td>
+            <td><strong data-img="Press militar con mancuernas (25 lb c:u).jpeg">Press militar mancuernas</strong></td>
             <td style="color:var(--muted)">Deltoides, trapecio, tríceps</td>
             <td>25 lb c/u</td>
             <td style="color:var(--muted);font-size:13px">+rep antes de +peso</td>
           </tr>
           <tr>
-            <td><strong>Fondos (dips)</strong></td>
+            <td><strong data-img="Fondos (dips) en banco — calistenia.jpeg">Fondos (dips)</strong></td>
             <td style="color:var(--muted)">Tríceps, pectoral inf., deltoides</td>
             <td>Peso corporal</td>
             <td style="color:var(--muted);font-size:13px">Agrega polaina 2 kg en semana 5+</td>
           </tr>
           <tr>
-            <td><strong>Elevaciones laterales</strong></td>
+            <td><strong data-img="Elevaciones laterales (15 lb c:u).jpeg">Elevaciones laterales</strong></td>
             <td style="color:var(--muted)">Deltoides medial</td>
             <td>15 lb c/u</td>
             <td style="color:var(--muted);font-size:13px">Control total — sin impulso</td>
           </tr>
           <tr>
-            <td><strong>Curl bíceps</strong></td>
+            <td><strong data-img="Curl bíceps con mancuerna (25 lb).jpeg">Curl bíceps</strong></td>
             <td style="color:var(--muted)">Bíceps braquial</td>
             <td>25 lb</td>
             <td style="color:var(--muted);font-size:13px">Supinación completa en cada rep</td>
           </tr>
           <tr>
-            <td><strong>Extensión tríceps overhead</strong></td>
+            <td><strong data-img="Extensión tríceps overhead (25 lb).jpeg">Extensión tríceps overhead</strong></td>
             <td style="color:var(--muted)">Tríceps (cabeza larga)</td>
             <td>25 lb</td>
             <td style="color:var(--muted);font-size:13px">Codos pegados a la cabeza</td>
@@ -938,37 +1021,37 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Sentadilla mancuernas (goblet)</strong></td>
+            <td><strong data-img="Sentadilla con mancuernas (35 lb c:u).jpeg">Sentadilla mancuernas (goblet)</strong></td>
             <td style="color:var(--muted)">Cuádriceps, glúteo, core</td>
             <td>35 lb</td>
             <td style="color:var(--muted);font-size:13px">Profundidad completa (90°+) antes de sumar peso</td>
           </tr>
           <tr>
-            <td><strong>Peso muerto rumano barra</strong></td>
+            <td><strong data-img="Peso muerto rumano con barra (10 kg).jpeg">Peso muerto rumano barra</strong></td>
             <td style="color:var(--muted)">Isquiotibiales, glúteo, erectores</td>
             <td>Barra 10 kg</td>
             <td style="color:var(--muted);font-size:13px">Bisagra de cadera — espalda neutral siempre</td>
           </tr>
           <tr>
-            <td><strong>Zancadas alternas</strong></td>
+            <td><strong data-img="Zancadas alternas con mancuerna (25 lb).jpeg">Zancadas alternas</strong></td>
             <td style="color:var(--muted)">Cuádriceps, glúteo, equilibrio</td>
             <td>25 lb c/u</td>
             <td style="color:var(--muted);font-size:13px">Paso amplio, rodilla no pasa la punta del pie</td>
           </tr>
           <tr>
-            <td><strong>Hip thrust en banco</strong></td>
+            <td><strong data-img="Hip thrust en banco con polaina (5 kg).jpeg">Hip thrust en banco</strong></td>
             <td style="color:var(--muted)">Glúteo mayor (aislado)</td>
             <td>Polaina 5 kg</td>
             <td style="color:var(--muted);font-size:13px">Contracción máxima 1 seg en la cima</td>
           </tr>
           <tr>
-            <td><strong>Sentadilla sumo mancuerna</strong></td>
+            <td><strong data-img="Sentadilla sumo con mancuerna (35 lb).jpeg">Sentadilla sumo mancuerna</strong></td>
             <td style="color:var(--muted)">Glúteo, aductores, cuádriceps</td>
             <td>35 lb</td>
             <td style="color:var(--muted);font-size:13px">Pies a 45°, rodillas hacia afuera</td>
           </tr>
           <tr>
-            <td><strong>Step-up en banco</strong></td>
+            <td><strong data-img="Step-up en banco aeróbics con mancuerna (15 lb c:u).jpeg">Step-up en banco</strong></td>
             <td style="color:var(--muted)">Cuádriceps, glúteo, equilibrio</td>
             <td>15 lb c/u</td>
             <td style="color:var(--muted);font-size:13px">Empuja desde el talón del pie elevado</td>
@@ -1494,6 +1577,17 @@
   </div>
 </div>
 
+<!-- IMAGE MODAL -->
+<div id="ex-modal" role="dialog" aria-modal="true" aria-label="Imagen del ejercicio">
+  <div class="modal-card">
+    <img id="modal-img" src="" alt="">
+    <div class="modal-bar">
+      <span id="modal-label" class="modal-label"></span>
+      <button class="modal-btn-close" onclick="closeExModal()">Cerrar ✕</button>
+    </div>
+  </div>
+</div>
+
 <script>
   function toggleMenu() {
     document.getElementById('mainNav').classList.toggle('open');
@@ -1514,6 +1608,29 @@
       toggleMenu();
     }
   }
+
+  document.addEventListener('click', function(e) {
+    const el = e.target.closest('[data-img]');
+    if (!el) return;
+    const file = el.getAttribute('data-img');
+    document.getElementById('modal-img').src = 'images/' + encodeURIComponent(file);
+    document.getElementById('modal-label').textContent = el.textContent.replace(' ↗', '').trim();
+    document.getElementById('ex-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeExModal() {
+    document.getElementById('ex-modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('ex-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeExModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeExModal();
+  });
 </script>
 
 </body>

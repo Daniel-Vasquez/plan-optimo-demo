@@ -236,6 +236,7 @@
   .type-cardio { background: rgba(71,194,255,0.12); color: var(--accent2); border: 1px solid rgba(71,194,255,0.25); }
   .type-mixto { background: rgba(255,107,53,0.12); color: var(--accent3); border: 1px solid rgba(255,107,53,0.25); }
   .type-descanso { background: rgba(90,98,120,0.2); color: var(--muted); border: 1px solid var(--border); }
+  .type-calistenia { background: rgba(180,100,255,0.12); color: #c090ff; border: 1px solid rgba(180,100,255,0.25); }
 
   .day-body { padding: 1rem 1.25rem; }
 
@@ -702,6 +703,10 @@
       <strong>Punto de atención: dolor de espalda baja.</strong> Trabajar en casa mucho tiempo sentado + corrida en concreto puede tensar el psoas y los flexores de cadera. El plan incluye trabajo de movilidad y core antirotacional específico para esto. Prioriza el calentamiento lumbopélvico cada sesión.
     </div>
 
+    <div class="tip-box" style="border-left-color: #c090ff; background: rgba(180,100,255,0.05); border-color: rgba(180,100,255,0.2);">
+      <strong>Sueño: tu principal palanca de recuperación.</strong> Duermes 6–7 h, por debajo de las 7–9 h recomendadas para recomposición corporal y running. Con doble sesión los martes y jueves (carrera + fuerza), el déficit de sueño es lo que más limita tu progreso — más que la dieta o el volumen de entreno. Prioriza acostarte 30 min antes los días previos a sesión doble, y usa el miércoles y domingo para recuperar horas si es posible.
+    </div>
+
     <div class="tip-box" style="border-left-color: var(--accent3); background: rgba(255,107,53,0.05); border-color: rgba(255,107,53,0.2);">
       <strong>Meta de tiempo 5K sugerida (16 semanas):</strong> pasar de 6:08 min/km (~30:40 total) a 5:20–5:30 min/km (~27:00–26:40 total). Esto representa una mejora del ~12–15% — realista con la periodización planificada.
     </div>
@@ -719,14 +724,34 @@
       <div class="day-card">
         <div class="day-header">
           <div class="day-name">Lunes</div>
-          <div class="day-type type-fuerza">Fuerza</div>
+          <div class="day-type type-mixto">Calistenia + Fuerza</div>
         </div>
         <div class="day-body">
-          <div class="day-schedule">Tarde-noche · ~60 min</div>
+          <div class="day-schedule">Mañana (calistenia) + Tarde-noche (fuerza) · 25 + 60 min · AM sin mancuernas/barra/banco</div>
           <ul class="exercise-list">
             <li>
+              <div class="ex-bullet">🤸</div>
+              <div><div class="ex-name" data-img="Calentamiento articular general.jpeg">Mañana: Calentamiento articular general</div><div class="ex-detail">5 min — movilidad de hombro, cadera y muñeca</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">🤸</div>
+              <div><div class="ex-name" data-img="Dominadas en barra.jpeg">Dominadas (o remo australiano si aún no hay fuerza suficiente)</div><div class="ex-detail">4 × máx reps limpias · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">🤸</div>
+              <div><div class="ex-name" data-img="Fondos en paralelas.jpeg">Fondos en paralelas</div><div class="ex-detail">4 × máx reps limpias · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">🤸</div>
+              <div><div class="ex-name" data-img="Push-up pike (hombro).jpeg">Push-up pike (hombro)</div><div class="ex-detail">3 × 10–12 · 60 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">🤸</div>
+              <div><div class="ex-name" data-img="Dead bug.jpeg">Dead bug</div><div class="ex-detail">3 × 8 alternos, 3 s hold — protección lumbar</div></div>
+            </li>
+            <li>
               <div class="ex-bullet">A</div>
-              <div><div class="ex-name" data-img="Calentamiento lumbopélvico.jpeg">Calentamiento lumbopélvico</div><div class="ex-detail">10 min — puente glúteo, bird-dog, gato-vaca</div></div>
+              <div><div class="ex-name" data-img="Calentamiento lumbopélvico.jpeg">Tarde: Calentamiento lumbopélvico</div><div class="ex-detail">10 min — puente glúteo, bird-dog, gato-vaca</div></div>
             </li>
             <li>
               <div class="ex-bullet">1</div>
@@ -734,7 +759,7 @@
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name">Peso muerto rumano a una pierna con mancuerna (25 lb)</div><div class="ex-detail">4 × 8–10 por pierna · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Peso muerto rumano con barra (10 kg).jpeg">Peso muerto rumano a una pierna con mancuerna (25 lb)</div><div class="ex-detail">4 × 8–10 por pierna · 90 s descanso · alterna con barra 10 kg bilateral cuando domines la técnica</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
@@ -847,10 +872,10 @@
       <div class="day-card">
         <div class="day-header">
           <div class="day-name">Viernes</div>
-          <div class="day-type type-fuerza">Fuerza</div>
+          <div class="day-type type-calistenia">Calistenia</div>
         </div>
         <div class="day-body">
-          <div class="day-schedule">Mañana · ~60 min</div>
+          <div class="day-schedule">Mañana · ~50 min · Sin mancuernas/barra/banco</div>
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">A</div>
@@ -858,22 +883,30 @@
             </li>
             <li>
               <div class="ex-bullet">1</div>
-              <div><div class="ex-name" data-img="Sentadilla sumo con mancuerna (35 lb).jpeg">Sentadilla sumo con mancuerna (35 lb)</div><div class="ex-detail">4 × 10–12 · 90 s descanso</div></div>
+              <div><div class="ex-name" data-img="Sentadilla búlgara peso corporal.jpeg">Sentadilla búlgara a una pierna (peso corporal)</div><div class="ex-detail">4 × 12 por pierna · 60 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">2</div>
-              <div><div class="ex-name" data-img="Extensión de cadera en 4 puntos (polaina 2 kg).jpeg">Extensión de cadera en 4 puntos (polaina 2 kg)</div><div class="ex-detail">3 × 15 por pierna · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Zancadas caminando peso corporal.jpeg">Zancadas caminando (peso corporal)</div><div class="ex-detail">3 × 12 por pierna · 45 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">3</div>
-              <div><div class="ex-name" data-img="Step-up en banco aeróbics con mancuerna (15 lb c:u).jpeg">Step-up en banco aeróbics con mancuerna (15 lb c/u)</div><div class="ex-detail">3 × 12 por pierna · 60 s descanso</div></div>
+              <div><div class="ex-name" data-img="Puente de glúteo a una pierna.jpeg">Puente de glúteo a una pierna (tapete)</div><div class="ex-detail">3 × 15 por pierna · 45 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">4</div>
-              <div><div class="ex-name" data-img="Abdominal bicicleta + elevación de piernas.jpeg">Abdominal bicicleta + elevación de piernas</div><div class="ex-detail">3 × 20 + 3 × 15 · 45 s descanso</div></div>
+              <div><div class="ex-name" data-img="Dominadas en barra.jpeg">Dominadas (mantenimiento)</div><div class="ex-detail">3 × máx reps · 90 s descanso</div></div>
             </li>
             <li>
               <div class="ex-bullet">5</div>
+              <div><div class="ex-name" data-img="Fondos en paralelas.jpeg">Fondos en paralelas (mantenimiento)</div><div class="ex-detail">3 × máx reps · 90 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">6</div>
+              <div><div class="ex-name" data-img="Abdominal bicicleta + elevación de piernas.jpeg">Abdominal bicicleta + elevación de piernas</div><div class="ex-detail">3 × 20 + 3 × 15 · 45 s descanso</div></div>
+            </li>
+            <li>
+              <div class="ex-bullet">7</div>
               <div><div class="ex-name" data-img="Plancha de hombros (shoulder tap).jpeg">Plancha de hombros (shoulder tap)</div><div class="ex-detail">3 × 30 s</div></div>
             </li>
           </ul>
@@ -912,11 +945,11 @@
           <div class="day-type type-cardio">Carrera larga</div>
         </div>
         <div class="day-body">
-          <div class="day-schedule">Mañana · 60–90 min</div>
+          <div class="day-schedule">Mañana · 60–120 min</div>
           <ul class="exercise-list">
             <li>
               <div class="ex-bullet">🏃</div>
-              <div><div class="ex-name">Long run: 10–15 km</div><div class="ex-detail">Ritmo conversacional ~6:30–6:50 min/km · No hero pace</div></div>
+              <div><div class="ex-name">Long run: 10–20 km</div><div class="ex-detail">Ritmo conversacional ~6:30–6:50 min/km · No hero pace · sube el kilometraje solo en semanas de carga</div></div>
             </li>
             <li>
               <div class="ex-bullet">✓</div>
@@ -937,7 +970,11 @@
     </div>
 
     <div class="tip-box" style="border-left-color: var(--accent2); background: rgba(71,194,255,0.05); border-color: rgba(71,194,255,0.2);">
-      <strong>Por qué se reorganizaron Jueves y Viernes:</strong> El tren superior (antes en Viernes) ahora va el Jueves, emparejado con la carrera — así el cuerpo bajo no acumula fatiga de piernas en un día de carrera. El tren inferior (antes en Jueves) pasa al Viernes en sesión única de mañana, con piernas frescas y sin carrera ese día, dejando el sábado de vóley y el domingo de carrera larga con la recuperación que necesitan.
+      <strong>Por qué Lunes combina calistenia AM + fuerza PM:</strong> La calistenia matutina (tracción y empuje con peso corporal) trabaja el tren superior; la fuerza de la tarde-noche se concentra en tren inferior con mancuernas/barra. Son grupos musculares distintos, así que no hay interferencia entre sesiones — y las piernas llegan frescas a la carga pesada de la tarde.
+    </div>
+
+    <div class="tip-box" style="border-left-color: var(--accent3); background: rgba(255,107,53,0.05); border-color: rgba(255,107,53,0.2);">
+      <strong>Por qué Viernes es solo calistenia:</strong> Ese día no tienes acceso a mancuernas, barra ni banco, así que la sesión se diseñó 100% con peso corporal (barra de dominadas, barra de fondos y tapete): piernas en modo mantenimiento/activación y tracción-empuje en volumen bajo, ya que el trabajo pesado de piernas ya se cubrió el lunes por la tarde. Esto deja el sábado de vóley y el domingo de carrera larga con la recuperación que necesitan.
     </div>
   </div>
 </div>
@@ -1064,6 +1101,54 @@
       </table>
     </div>
 
+    <div style="margin-bottom:2rem">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;color:#c090ff;margin-bottom:0.5rem;letter-spacing:0.03em">CALISTENIA</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.2rem">Lunes mañana y Viernes mañana — sin mancuernas, barra ni banco</p>
+
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Ejercicio</th>
+            <th>Músculo principal</th>
+            <th>Volumen</th>
+            <th>Progresión</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong data-img="Dominadas en barra.jpeg">Dominadas</strong></td>
+            <td style="color:var(--muted)">Dorsal, bíceps, antebrazo</td>
+            <td>4 × máx (Lun) / 3 × máx (Vie)</td>
+            <td style="color:var(--muted);font-size:13px">Si aún no completas 5 reps limpias, usa remo australiano o negativas de 4 s</td>
+          </tr>
+          <tr>
+            <td><strong data-img="Fondos en paralelas.jpeg">Fondos en paralelas</strong></td>
+            <td style="color:var(--muted)">Tríceps, pectoral inferior</td>
+            <td>4 × máx (Lun) / 3 × máx (Vie)</td>
+            <td style="color:var(--muted);font-size:13px">Al superar 15 reps limpias, añade tempo lento 3-1-1 antes de sumar peso externo</td>
+          </tr>
+          <tr>
+            <td><strong data-img="Push-up pike (hombro).jpeg">Push-up pike</strong></td>
+            <td style="color:var(--muted)">Deltoides, tríceps</td>
+            <td>3 × 10–12</td>
+            <td style="color:var(--muted);font-size:13px">Eleva más los pies para aumentar la dificultad progresivamente</td>
+          </tr>
+          <tr>
+            <td><strong data-img="Sentadilla búlgara peso corporal.jpeg">Sentadilla búlgara (peso corporal)</strong></td>
+            <td style="color:var(--muted)">Cuádriceps, glúteo</td>
+            <td>4 × 12 por pierna</td>
+            <td style="color:var(--muted);font-size:13px">Cuando sea fácil, baja más lento (excéntrica 3 s) o añade pausa abajo</td>
+          </tr>
+          <tr>
+            <td><strong data-img="Puente de glúteo a una pierna.jpeg">Puente de glúteo a una pierna</strong></td>
+            <td style="color:var(--muted)">Glúteo mayor, isquiotibiales</td>
+            <td>3 × 15 por pierna</td>
+            <td style="color:var(--muted);font-size:13px">Contracción máxima 2 s en la cima</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div>
       <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--accent2);margin-bottom:0.5rem;letter-spacing:0.03em">CORE Y LUMBAR</h3>
       <p style="color:var(--muted);font-size:14px;margin-bottom:1.2rem">Todos los días de fuerza — específico para dolor de espalda baja</p>
@@ -1152,10 +1237,10 @@
     </div>
 
     <div class="run-block">
-      <h3>Domingo — Carrera larga (10–15 km)</h3>
+      <h3>Domingo — Carrera larga (10–20 km)</h3>
       <p style="color:var(--muted);font-size:14px;margin-bottom:0.5rem">Construye base aeróbica y resistencia fundamental</p>
       <div class="run-detail">
-        <div class="run-metric"><div class="lbl">Distancia</div><div class="val">10–15 km</div></div>
+        <div class="run-metric"><div class="lbl">Distancia</div><div class="val">10–20 km</div></div>
         <div class="run-metric"><div class="lbl">Ritmo</div><div class="val" style="color:var(--accent2)">6:30–6:50 min/km</div></div>
         <div class="run-metric"><div class="lbl">Regla</div><div class="val">Puedes hablar cómodo</div></div>
         <div class="run-metric"><div class="lbl">Hidratación</div><div class="val">Lleva agua si >12 km</div></div>
@@ -1313,6 +1398,10 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="tip-box" style="border-left-color: var(--accent2); background: rgba(71,194,255,0.05); border-color: rgba(71,194,255,0.2); margin-top: -0.5rem;">
+      <strong>Tu caso específico — el hueco de la tarde-noche:</strong> comes entre 2:30–3:30 pm y entrenas fuerza/calistenia en la tarde-noche de lunes, martes y jueves. Eso deja 4–6 horas sin combustible antes de la sesión. Agrega una merienda ligera 45–60 min antes de entrenar: <strong style="color:var(--text)">plátano + un puñado de nueces/almendras</strong>, o <strong style="color:var(--text)">1 huevo cocido + fruta</strong>. Evita llegar a la sesión de fuerza en ayuno prolongado — reduce el rendimiento y favorece el catabolismo muscular.
     </div>
 
     <div class="divider"></div>
@@ -1487,7 +1576,7 @@
           <td class="phase">9–12</td>
           <td><strong>Carga progresiva</strong></td>
           <td style="color:var(--muted);font-size:13px">4–5 series × 6–10 reps<br>Cargas máximas<br>Drop sets opcionales</td>
-          <td style="color:var(--muted);font-size:13px">27–32 km<br>Intervalos 600 m × 6<br>Tempo 3 km<br>Long run 15 km</td>
+          <td style="color:var(--muted);font-size:13px">27–32 km<br>Intervalos 600 m × 6<br>Tempo 3 km<br>Long run 15–18 km</td>
           <td style="color:var(--accent3);font-size:13px">Baja — prioritaria</td>
           <td style="color:var(--muted);font-size:13px">Pico de volumen y fuerza — máximo estímulo</td>
         </tr>
@@ -1495,7 +1584,7 @@
           <td class="phase">13–14</td>
           <td><strong>Intensificación</strong></td>
           <td style="color:var(--muted);font-size:13px">4 series × 5–8 reps<br>Carga muy alta<br>RPE 8–9</td>
-          <td style="color:var(--muted);font-size:13px">30–35 km<br>Intervalos a ritmo carrera<br>Long run 15 km fuerte</td>
+          <td style="color:var(--muted);font-size:13px">30–35 km<br>Intervalos a ritmo carrera<br>Long run 18–20 km fuerte</td>
           <td style="color:var(--accent3);font-size:13px">Crítica — no negocies</td>
           <td style="color:var(--muted);font-size:13px">Adaptación máxima antes del taper</td>
         </tr>
